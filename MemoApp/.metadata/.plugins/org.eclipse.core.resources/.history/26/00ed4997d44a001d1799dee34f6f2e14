@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.MemoApp.repository.MemoMapper">
+	
+	<!-- LIST項目 全取得 -->
+	<select id="selectAll" resultType="com.example.MemoApp.entity.MemoListEntity">
+		SELECT * 
+		FROM 
+			memoapp.memo;
+	</select>
+	
+	<!-- 指定MEMO 取得 -->
+	<select id="memoSelect" parameterType="com.example.MemoApp.dto.MemoSelectDto" resultType="com.example.MemoApp.entity.MemoSelectEntity">
+		SELECT * 
+		FROM 
+			memoapp.memo
+		WHERE
+			MEMO_ID         = #{memo_id} AND
+			CREATE_DATETIME = #{create_datetime};
+	</select>
+	
+	<!-- MEMO新規作成 -->
+	<insert id="createMemo" parameterType="com.example.MemoApp.dto.MemoCreateDto">
+		INSERT INTO memoapp.memo (
+			MEMO_KND,
+			CREATE_USER,
+			CREATE_DATETIME,
+			TITLE,
+			NEW_DATETIME,
+			UP_KND) 
+		VALUES (
+			#{memo_knd},
+			#{create_user},
+			#{create_datetime},
+			#{title},
+			#{new_datetime},
+			#{up_knd});	
+	</insert>
+	
+	<!-- MEMO更新 -->
+	<update id="updateMemo" parameterType="com.example.MemoApp.dto.MemoUpdateDto">
+		UPDATE memoapp.memo SET (
+			MEMO_KND        = #{memo_knd},
+			UPDATE_USER     = #{update_user},
+			UPDATE_DATETIME = #{update_datetime},
+			TITLE           = #{title},
+			MEMO            = #{memo},
+			NEW_DATETIME    = #{new_datetime},
+			UP_KND          = #{up_knd}
+		)
+		WHERE 
+			MEMO_ID         = #{memo_id} AND
+			CREATE_DATETIME = #{create_datetime};
+	</update>
+
+</mapper>
+
